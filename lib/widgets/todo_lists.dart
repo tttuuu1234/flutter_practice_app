@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './todo_add.dart';
 import './todo_edit.dart';
+import './test.dart';
 
 class TodoList extends StatefulWidget {
   @override
@@ -74,6 +75,18 @@ class _TodoListState extends State<TodoList> {
                               );
                             },
                           ),
+                          IconButton(
+                            icon: Icon(Icons.ac_unit),
+                            onPressed: () async {
+                              final test = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Test('ツバサ'),
+                                ),
+                              );
+                              print(test);
+                            },
+                          )
                         ],
                       ),
                     )
