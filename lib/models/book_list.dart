@@ -20,7 +20,6 @@ class BookListModel extends ChangeNotifier {
           ),
         )
         .toList();
-    print(books[1].title);
     // 定義したbooksにdocBooksをいれる
     this.books = docBooks;
     notifyListeners();

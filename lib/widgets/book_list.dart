@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/book_list.dart';
+import './add_book.dart';
 
 class BookList extends StatelessWidget {
   @override
@@ -18,8 +19,8 @@ class BookList extends StatelessWidget {
             final books = model.books;
             final listTiles = books
                 .map(
-                  (e) => ListTile(
-                    title: Text(e.title),
+                  (book) => ListTile(
+                    title: Text(book.title),
                   ),
                 )
                 .toList();
@@ -29,7 +30,21 @@ class BookList extends StatelessWidget {
           },
         ),
         floatingActionButton:
-            FloatingActionButton(child: Icon(Icons.add), onPressed: () {}),
+            Consumer<BookListModel>(builder: (context, model, child) {
+          return FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddBook(),
+                  fullscreenDialog: true,
+                ),
+              );
+              model.fetchBooks();
+            },
+          );
+        }),
         // body: StreamBuilder<QuerySnapshot>(
         //   stream: FirebaseFirestore.instance.collection('books').snapshots(),
         //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

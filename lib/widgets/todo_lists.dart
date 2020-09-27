@@ -75,7 +75,7 @@ class _TodoListState extends State<TodoList> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.ac_unit),
+                            icon: Icon(Icons.text_fields),
                             onPressed: () async {
                               final test = await Navigator.push(
                                 context,
@@ -87,7 +87,7 @@ class _TodoListState extends State<TodoList> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.access_alarm),
+                            icon: Icon(Icons.zoom_out_map),
                             onPressed: () {
                               Navigator.push(
                                 context,
