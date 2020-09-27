@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './todo_lists.dart';
+// import './todo_lists.dart';
 
 class Test extends StatelessWidget {
   final String name;
@@ -11,7 +11,7 @@ class Test extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Testページです'),
+        title: Text('ああああああああああ'),
       ),
       // body: Container(
       //   child: Column(
