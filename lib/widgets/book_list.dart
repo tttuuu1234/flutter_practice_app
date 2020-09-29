@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/book_list.dart';
@@ -21,6 +20,21 @@ class BookList extends StatelessWidget {
                 .map(
                   (book) => ListTile(
                     title: Text(book.title),
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddBook(
+                              book: book,
+                            ),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                        model.fetchBooks();
+                      },
+                    ),
                   ),
                 )
                 .toList();
@@ -29,22 +43,23 @@ class BookList extends StatelessWidget {
             );
           },
         ),
-        floatingActionButton:
-            Consumer<BookListModel>(builder: (context, model, child) {
-          return FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddBook(),
-                  fullscreenDialog: true,
-                ),
-              );
-              model.fetchBooks();
-            },
-          );
-        }),
+        floatingActionButton: Consumer<BookListModel>(
+          builder: (context, model, child) {
+            return FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddBook(),
+                    fullscreenDialog: true,
+                  ),
+                );
+                model.fetchBooks();
+              },
+            );
+          },
+        ),
         // body: StreamBuilder<QuerySnapshot>(
         //   stream: FirebaseFirestore.instance.collection('books').snapshots(),
         //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

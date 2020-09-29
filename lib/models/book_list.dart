@@ -13,13 +13,8 @@ class BookListModel extends ChangeNotifier {
     // 取得したbooksの配列を一つずつBookコンストラクタにtitleを入れて、値を保持するようにしている?
     // bookと言う型に変換しているらしい
     final docBooks = documentSnapshots.docs
-        .map(
-          (doc) => Book(
-            // collection内のdocument内のtitleを引数に与えている
-            doc.data()['title'],
-          ),
-        )
-        .toList();
+    // collection内のdocument内のtitleを引数に与えている
+        .map((doc) => Book(doc),).toList();
     // 定義したbooksにdocBooksをいれる
     this.books = docBooks;
     notifyListeners();
