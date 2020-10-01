@@ -13,10 +13,19 @@ class BookListModel extends ChangeNotifier {
     // 取得したbooksの配列を一つずつBookコンストラクタにtitleを入れて、値を保持するようにしている?
     // bookと言う型に変換しているらしい
     final docBooks = documentSnapshots.docs
-    // collection内のdocument内のtitleを引数に与えている
-        .map((doc) => Book(doc),).toList();
+        // collection内のdocument内のtitleを引数に与えている
+        .map(
+          (doc) => Book(doc),
+        )
+        .toList();
     // 定義したbooksにdocBooksをいれる
     this.books = docBooks;
     notifyListeners();
+  }
+
+  Future deleteBookToFirebase(book) async {
+    await FirebaseFirestore.instance.collection('books').doc(book.id).delete();
+
+    print('削除成功');
   }
 }

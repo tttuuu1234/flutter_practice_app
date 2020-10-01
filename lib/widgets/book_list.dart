@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/book_list.dart';
 import './add_book.dart';
+import '../book.dart';
 
 class BookList extends StatelessWidget {
   @override
@@ -35,6 +36,27 @@ class BookList extends StatelessWidget {
                         model.fetchBooks();
                       },
                     ),
+                    onLongPress: () async{
+                      print('反応している?');
+
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('${book.title}を削除しますか？'),
+                            actions: <Widget>[
+                              FlatButton(
+                                onPressed: () async {
+                                  Navigator.of(context).pop();
+                                  await deleteBook(book, model, context);
+                                },
+                                child: Text('はい'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                   ),
                 )
                 .toList();
@@ -74,5 +96,40 @@ class BookList extends StatelessWidget {
         // ),
       ),
     );
+  }
+}
+
+// 本の追加
+Future deleteBook(Book book, BookListModel model, BuildContext context) async {
+  try {
+    await model.deleteBookToFirebase(book);
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return AlertDialog(
+    //       title: Text('削除しました'),
+    //       actions: <Widget>[
+    //         FlatButton(
+    //           onPressed: () {
+    //             Navigator.of(context).pop();
+    //           },
+    //           child: Text('OK'),
+    //         )
+    //       ],
+    //     );
+    //   },
+    // );
+    await model.fetchBooks();
+    // Navigator.of(context).pop();
+  } catch (e) {
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return AlertDialog(
+    //       title: Text('bookTitleに何も値が入っていないよ'),
+    //     );
+    //   },
+    // );
+    print('削除ダメでした');
   }
 }
